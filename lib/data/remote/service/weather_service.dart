@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:dio_logger/dio_logger.dart';
-import 'package:flutter_weather/data/model/remote/forecast_container_model.dart';
-import 'package:flutter_weather/data/model/remote/weather_container_model.dart';
+import 'package:flutter_weather/data/remote/model/forecast_container_model.dart';
+import 'package:flutter_weather/data/remote/model/weather_container_model.dart';
 
 class WeatherService {
   static const _BASE_URL = 'https://api.weatherapi.com/v1/';

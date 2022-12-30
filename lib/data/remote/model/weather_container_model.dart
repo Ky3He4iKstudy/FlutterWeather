@@ -1,5 +1,5 @@
-import 'package:flutter_weather/data/model/remote/current_weather_data_model.dart';
-import 'package:flutter_weather/data/model/remote/location_data_model.dart';
+import 'package:flutter_weather/data/remote/model/current_weather_data_model.dart';
+import 'package:flutter_weather/data/remote/model/location_data_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'weather_container_model.g.dart';

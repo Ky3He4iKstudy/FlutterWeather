@@ -1,14 +1,14 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_weather/data/mapper/forecast_container_to_forecast_dto_mapper.dart';
 import 'package:flutter_weather/data/mapper/weather_container_to_weather_dto_mapper.dart';
-import 'package:flutter_weather/data/model/remote/weather_container_model.dart';
+import 'package:flutter_weather/data/remote/model/weather_container_model.dart';
 import 'package:flutter_weather/data/remote/service/weather_service.dart';
 
 import '../../core/error/failures.dart';
-import '../../domain/entity/forecast_dto.dart';
-import '../../domain/entity/weather_dto.dart';
-import '../../domain/repository/weather_repository.dart';
-import '../model/remote/forecast_container_model.dart';
+import '../entity/forecast_dto.dart';
+import '../entity/weather_dto.dart';
+import 'weather_repository.dart';
+import '../../data/remote/model/forecast_container_model.dart';
 
 class WeatherRepositoryImpl extends WeatherRepository {
   final WeatherService _weatherService;

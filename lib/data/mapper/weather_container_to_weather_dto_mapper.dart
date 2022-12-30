@@ -1,4 +1,4 @@
-import 'package:flutter_weather/data/model/remote/weather_container_model.dart';
+import 'package:flutter_weather/data/remote/model/weather_container_model.dart';
 import 'package:flutter_weather/domain/entity/weather_dto.dart';
 
 class WeatherContainerToWeatherDtoMapper {

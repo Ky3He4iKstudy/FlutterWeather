@@ -3,7 +3,7 @@
 // val alert: List<Alert>
 // )
 //
-import 'package:flutter_weather/data/model/remote/alert_model.dart';
+import 'package:flutter_weather/data/remote/model/alert_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'alert_list_model.g.dart';

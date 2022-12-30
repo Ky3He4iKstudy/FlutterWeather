@@ -1,7 +1,7 @@
-import 'package:flutter_weather/data/model/remote/astro_model.dart';
-import 'package:flutter_weather/data/model/remote/condition_model.dart';
-import 'package:flutter_weather/data/model/remote/forecast_container_model.dart';
-import 'package:flutter_weather/data/model/remote/forecast_for_day_model.dart';
+import 'package:flutter_weather/data/remote/model/astro_model.dart';
+import 'package:flutter_weather/data/remote/model/condition_model.dart';
+import 'package:flutter_weather/data/remote/model/forecast_container_model.dart';
+import 'package:flutter_weather/data/remote/model/forecast_for_day_model.dart';
 import 'package:flutter_weather/domain/entity/astro_dto.dart';
 import 'package:flutter_weather/domain/entity/days_dto.dart';
 import 'package:flutter_weather/domain/entity/forecast_dto.dart';
@@ -9,8 +9,8 @@ import 'package:flutter_weather/domain/entity/forecast_dto.dart';
 import '../../domain/entity/day_dto.dart';
 import '../../domain/entity/hours_dto.dart';
 import '../../domain/entity/weather_condition_dto.dart';
-import '../model/remote/day_model.dart';
-import '../model/remote/hour_model.dart';
+import '../remote/model/day_model.dart';
+import '../remote/model/hour_model.dart';
 
 class ForecastContainerToForecastDtoMapper {
   static ForecastDto mapToDto(ForecastContainerModel model) {

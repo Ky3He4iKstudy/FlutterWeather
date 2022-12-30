@@ -1,4 +1,4 @@
-import 'package:flutter_weather/data/model/remote/condition_model.dart';
+import 'package:flutter_weather/data/remote/model/condition_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'hour_model.g.dart';
