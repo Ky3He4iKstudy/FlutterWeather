@@ -1,11 +1,7 @@
-// import 'package:dartz/dartz.dart';
-import 'package:drift/drift.dart';
 import "package:flutter/material.dart";
-// import "package:dart/basic.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_weather/presentation/settings/locations/location_variants_bloc.dart';
 
-import '../../data/local/location_db.dart';
+// import '../../data/local/location_db.dart';
 import '../home/forecast/forecast_location_bloc.dart';
 import '../home/widget/base_card.dart';
 
@@ -22,6 +18,7 @@ class _SettingsPageState extends State<SettingsPage> {
   var long = "";
   var city = "";
   late ForecastLocationBloc bloc;
+
   // late LocationDB db;
 
   @override
@@ -44,70 +41,54 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Widget _buildBody() {
-    var body = SingleChildScrollView(
-      child: Center(
-        child: Column(
-          children: <Widget>[
-            
-          ]
-        ),
-      )
-    );
-    // var col = Column(
-    //     crossAxisAlignment: CrossAxisAlignment.start,
-    //     mainAxisSize: MainAxisSize.min,
-    //     child: const [
-    //
-    //   ]
-    // );
     var row = Row(
       children: [
-          Checkbox(
-            value: isChecked,
-            onChanged: (bool? value) {
-              setState(() {
-                isChecked = value!;
-              });
-            },
-          ),
-          const Text("Use location coordinates"),
-        // isChecked
-        //     ? Row(
-        //   children: [
-        //     Text("Coordinates:"),
-        //     TextField(
-        //         keyboardType: TextInputType.number,
-        //         onChanged: (String value) {
-        //           lat = value;
-        //         },
-        //         onSubmitted: (String lat) {
-        //           onCoordSubmit(lat, long);
-        //         },
-        //         decoration: InputDecoration(
-        //             border: OutlineInputBorder(), hintText: "Lat")),
-        //     TextField(
-        //         keyboardType: TextInputType.number,
-        //         onChanged: (String value) {
-        //           long = value;
-        //         },
-        //         onSubmitted: (String lat) {
-        //           onCoordSubmit(lat, long);
-        //         },
-        //         decoration: InputDecoration(
-        //             border: OutlineInputBorder(), hintText: "Long"))
-        //   ],
-        // )
-        //     : Row(
-        //   children: [
-        //     Text("City:"),
-        //     TextField(
-        //         onChanged: (String value) {
-        //           city = value;
-        //         },
-        //         decoration: InputDecoration(
-        //             border: OutlineInputBorder(), hintText: "City name"))
-        //   ],
-        // ),
+        Checkbox(
+          value: isChecked,
+          onChanged: (bool? value) {
+            setState(() {
+              isChecked = value!;
+            });
+          },
+        ),
+        const Text("Use location coordinates"),
+        isChecked
+            ? Row(
+                children: [
+                  Text("Coordinates:"),
+                  TextField(
+                      keyboardType: TextInputType.number,
+                      onChanged: (String value) {
+                        lat = value;
+                      },
+                      onSubmitted: (String lat) {
+                        onCoordSubmit(lat, long);
+                      },
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(), hintText: "Lat")),
+                  TextField(
+                      keyboardType: TextInputType.number,
+                      onChanged: (String value) {
+                        long = value;
+                      },
+                      onSubmitted: (String lat) {
+                        onCoordSubmit(lat, long);
+                      },
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(), hintText: "Long"))
+                ],
+              )
+            : Row(
+                children: [
+                  Text("City:"),
+                  TextField(
+                      onChanged: (String value) {
+                        city = value;
+                      },
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(), hintText: "City name"))
+                ],
+              ),
       ],
     );
 
