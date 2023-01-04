@@ -17,7 +17,7 @@ class WeatherService {
     _dio.interceptors.add(dioLoggerInterceptor);
   }
 
-  Future<WeatherContainerModel?> getWeather(String location) async {
+  Future<WeatherContainerModel> getWeather(String location) async {
     final response = await _dio.get(
       "current.json",
       queryParameters: {'key': apiKey, 'q': location},
@@ -25,7 +25,7 @@ class WeatherService {
     return WeatherContainerModel.fromJson(response.data);
   }
 
-  Future<List<String>?> getLocationSearch(String location) async {
+  Future<List<String>> getLocationSearch(String location) async {
     final response = await _dio.get(
       "search.json",
       queryParameters: {'key': apiKey, 'q': location},
@@ -33,7 +33,7 @@ class WeatherService {
     return List<String>.from(json.decode(response.data));
   }
 
-  Future<ForecastContainerModel?> getForecast(String location) async {
+  Future<ForecastContainerModel> getForecast(String location) async {
     final response = await _dio.get(
       "forecast.json",
       queryParameters: {

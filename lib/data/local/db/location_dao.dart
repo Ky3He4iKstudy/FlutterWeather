@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart';
-import 'package:flutter_weather/data/local/location_entity.dart';
+import 'package:flutter_weather/data/local/entity/location_entity.dart';
 
 import 'location_db.dart';
 

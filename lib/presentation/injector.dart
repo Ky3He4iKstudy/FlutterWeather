@@ -1,4 +1,5 @@
-import 'package:flutter_weather/data/local/location_db.dart';
+import 'package:flutter_weather/data/local/repository/local_repository.dart';
+import 'package:flutter_weather/data/local/repository/local_repository_impl.dart';
 import 'package:flutter_weather/domain/usecase/get_forecast_by_location.dart';
 import 'package:flutter_weather/domain/usecase/get_varians_of_location.dart';
 import 'package:flutter_weather/presentation/home/forecast/forecast_location_bloc.dart';
@@ -29,10 +30,7 @@ void initializeDependencies() {
   injector.registerSingleton<GetVariantsOfLocation>(
       GetVariantsOfLocation(injector()));
 
-  // injector.registerSingleton<LocationDB> (
-  //     LocationDB()
-  // );
-  injector.registerSingleton<LocationDB>(LocationDB());
+  injector.registerSingleton<LocalRepository>(LocalRepositoryImpl());
 
   injector.registerFactory<WeatherLocationBloc>(
           () => WeatherLocationBloc(injector()));

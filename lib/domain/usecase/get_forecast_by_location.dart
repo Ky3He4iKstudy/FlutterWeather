@@ -12,7 +12,7 @@ class GetForecastByLocation implements UseCase<ForecastDto, Params> {
   GetForecastByLocation(this.repository);
 
   @override
-  Future<Either<Failure, ForecastDto>> call(Params params) async {
+  Future<ForecastDto> call(Params params) async {
     return await repository.getForecast(params.location);
   }
 }

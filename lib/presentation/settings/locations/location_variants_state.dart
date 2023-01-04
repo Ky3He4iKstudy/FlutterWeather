@@ -17,12 +17,16 @@ class LocationVariantsLoadingState extends LocationVariantsState {
 }
 
 class LocationVariantsSuccessState extends LocationVariantsState {
-  final WeatherDto weatherDto;
+  final List<String> res;
 
-  const LocationVariantsSuccessState({required this.weatherDto});
+  const LocationVariantsSuccessState({required this.res});
 
   @override
-  List<Object?> get props => [weatherDto];
+  List<Object?> get props => [res];
+}
+
+class LocationSaveSuccessState extends LocationVariantsState {
+  const LocationSaveSuccessState();
 }
 
 class LocationVariantsErrorState extends LocationVariantsState {

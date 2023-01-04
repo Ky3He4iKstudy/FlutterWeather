@@ -1,5 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_weather/data/local/db/location_db.dart';
+import 'package:flutter_weather/data/local/repository/local_repository.dart';
 
 // import '../../data/local/location_db.dart';
 import '../home/forecast/forecast_location_bloc.dart';
@@ -18,6 +20,7 @@ class _SettingsPageState extends State<SettingsPage> {
   var long = "";
   var city = "";
   late ForecastLocationBloc bloc;
+  late LocalRepository local;
 
   // late LocationDB db;
 
@@ -25,7 +28,7 @@ class _SettingsPageState extends State<SettingsPage> {
   void initState() {
     super.initState();
     bloc = context.read<ForecastLocationBloc>();
-    // db = context.read<LocationDB>();
+    local = context.read<LocalRepository>();
   }
 
   @override
@@ -41,7 +44,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Widget _buildBody() {
-    var row = Row(
+    var checkRow = Row(
       children: [
         Checkbox(
           value: isChecked,
@@ -52,47 +55,53 @@ class _SettingsPageState extends State<SettingsPage> {
           },
         ),
         const Text("Use location coordinates"),
-        isChecked
-            ? Row(
-                children: [
-                  Text("Coordinates:"),
-                  TextField(
-                      keyboardType: TextInputType.number,
-                      onChanged: (String value) {
-                        lat = value;
-                      },
-                      onSubmitted: (String lat) {
-                        onCoordSubmit(lat, long);
-                      },
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(), hintText: "Lat")),
-                  TextField(
-                      keyboardType: TextInputType.number,
-                      onChanged: (String value) {
-                        long = value;
-                      },
-                      onSubmitted: (String lat) {
-                        onCoordSubmit(lat, long);
-                      },
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(), hintText: "Long"))
-                ],
-              )
-            : Row(
-                children: [
-                  Text("City:"),
-                  TextField(
-                      onChanged: (String value) {
-                        city = value;
-                      },
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(), hintText: "City name"))
-                ],
-              ),
       ],
     );
-
-    return BaseCard(child: row);
+    var coordRow = Row(
+      children: [
+        const Text("Coordinates:"),
+        Expanded(
+          child: TextField(
+              keyboardType: TextInputType.number,
+              onChanged: (String value) {
+                lat = value;
+              },
+              onSubmitted: (String lat) {
+                onCoordSubmit(lat, long);
+              },
+              decoration: const InputDecoration(
+                  border: OutlineInputBorder(), hintText: "Lat")),
+        ),
+        Expanded(
+            child: TextField(
+                keyboardType: TextInputType.number,
+                onChanged: (String value) {
+                  long = value;
+                },
+                onSubmitted: (String lat) {
+                  onCoordSubmit(lat, long);
+                },
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(), hintText: "Long")))
+      ],
+    );
+    var cityRow = Row(
+      children: [
+        const Text("City:"),
+        Expanded(
+            child: TextField(
+                onChanged: (String value) {
+                  city = value;
+                },
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(), hintText: "City name")))
+      ],
+    );
+    var row = isChecked ? coordRow : cityRow;
+    return BaseCard(
+        child: Column(
+      children: [checkRow, row],
+    ));
   }
 
   void onCoordSubmit(String lat, String long) {
@@ -101,11 +110,17 @@ class _SettingsPageState extends State<SettingsPage> {
       var longD = double.tryParse(long);
       if (latD != null && longD != null) {
         var result = '$latD,$longD';
-
-        // db.locationDao.insertEntity(LocationEntitysCompanion(
-        //     cityName: Value(city), loc: Value(result)));
+        local.insertLocation(
+            LocationEntity(id: 0, cityName: result, loc: result));
         Navigator.pop(context);
       }
+    }
+  }
+
+  void onCitySubmit(String lat, String long) {
+    if (city.isNotEmpty) {
+      local.insertLocation(LocationEntity(id: 0, cityName: city, loc: city));
+      Navigator.pop(context);
     }
   }
 }

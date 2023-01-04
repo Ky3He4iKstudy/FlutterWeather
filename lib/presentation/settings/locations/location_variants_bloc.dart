@@ -1,43 +1,38 @@
-import 'dart:math';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weather/presentation/settings/locations/location_variants_event.dart';
 import 'package:flutter_weather/presentation/settings/locations/location_variants_state.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../../data/local/location_db.dart';
-import '../../../domain/usecase/get_weather_by_location.dart';
+import '../../../data/local/db/location_db.dart';
+import '../../../data/local/repository/local_repository.dart';
+import '../../../domain/usecase/get_varians_of_location.dart';
 import '../../../domain/usecase/usecase_params.dart';
 
 class LocationVariantsBloc
     extends Bloc<LocationVariantsEvent, LocationVariantsState> {
-  final GetWeatherByLocation _getWeatherByLocation;
-  // late final LocationDB _locationDB;
+  final GetVariantsOfLocation _getVariantsOfLocation;
+  late LocalRepository local;
 
-  LocationVariantsBloc(this._getWeatherByLocation)
+  LocationVariantsBloc(this._getVariantsOfLocation)
       : super(const LocationVariantsInitialState()) {
     on<GetLocationVariantsEvent>(_onGetLocationVariants);
-
-    // _locationDB = GetIt.instance.get<LocationDB>();
-    // on<LocationDB>(_locationDB);
+    on<SaveLocationEvent>(_onSaveLocation);
+    local = GetIt.instance.get<LocalRepository>();
   }
 
-  Future<void> _onGetLocationVariants(
+  _onGetLocationVariants(
     GetLocationVariantsEvent event,
     Emitter<LocationVariantsState> emit,
   ) async {
     emit(const LocationVariantsLoadingState());
-    await Future.delayed(const Duration(seconds: 2));
-    bool isSucceed = Random().nextBool();
-    if (isSucceed) {
-      final result =
-          await _getWeatherByLocation(const Params(location: 'Moscow'));
+    final res = await _getVariantsOfLocation(Params(location: event.location));
+    emit(LocationVariantsSuccessState(res: res));
+  }
 
-      emit(result.fold(
-          (l) => null, (r) => LocationVariantsSuccessState(weatherDto: r))!);
-    } else {
-      emit(const LocationVariantsErrorState(
-          message: "something went very wrong :("));
-    }
+  _onSaveLocation(
+      SaveLocationEvent event, Emitter<LocationVariantsState> emit) async {
+    await local.insertLocation(
+        LocationEntity(id: 0, cityName: event.location, loc: event.location));
+    emit(const LocationSaveSuccessState());
   }
 }

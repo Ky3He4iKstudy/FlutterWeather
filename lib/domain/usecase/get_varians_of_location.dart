@@ -11,7 +11,7 @@ class GetVariantsOfLocation implements UseCase<List<String>, Params> {
   GetVariantsOfLocation(this.repository);
 
   @override
-  Future<Either<Failure, List<String>>> call(Params params) async {
+  Future<List<String>> call(Params params) async {
     return await repository.getLocationSearch(params.location);
   }
 }

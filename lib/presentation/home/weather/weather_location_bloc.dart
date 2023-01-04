@@ -22,12 +22,13 @@ class WeatherLocationBloc
   ) async {
     emit(const WeatherLocationLoadingState());
     await Future.delayed(const Duration(seconds: 2));
-    bool isSucceed = Random().nextBool();
+    bool isSucceed = false;
+    // bool isSucceed = Random().nextBool();
     if (isSucceed) {
       final result = await _getWeatherByLocation(const Params(location: 'Moscow'));
 
-      emit(result.fold((l) => null,
-          (r) => WeatherLocationSuccessState(weatherDto: r))!);
+      // emit(result.fold((l) => null,
+      //     (r) => WeatherLocationSuccessState(weatherDto: r))!);
     } else {
       emit(const WeatherLocationErrorState(
           message: "something went very wrong :("));

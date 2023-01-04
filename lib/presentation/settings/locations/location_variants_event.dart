@@ -8,5 +8,11 @@ abstract class LocationVariantsEvent extends Equatable {
 }
 
 class GetLocationVariantsEvent extends LocationVariantsEvent {
-  const GetLocationVariantsEvent();
+  String location;
+  GetLocationVariantsEvent({this.location = "Moscow"});
+}
+
+class SaveLocationEvent extends LocationVariantsEvent {
+  String location;
+  SaveLocationEvent({this.location = "Moscow"});
 }
