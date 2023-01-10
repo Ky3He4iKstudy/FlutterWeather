@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
                       ?.copyWith(color: appTheme.colorScheme.primary)));
         }
         if (state is ForecastLocationSuccessState) {
-          return _buildWeatherScreen(state.forecastDto);
+          return _buildWeatherScreen(state.forecastDtos);
         }
         return Center(
           child: ElevatedButton(
@@ -71,9 +71,17 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildWeatherScreen(ForecastDto forecastDto) {
+  Widget _buildWeatherScreen(List<ForecastDto> forecastDtos) {
+    var forecasts = forecastDtos.map((e) => _buildWeatherComponent(e)).toList();
     return SingleChildScrollView(
         child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: forecasts,
+    ));
+  }
+
+  Widget _buildWeatherComponent(ForecastDto forecastDto) {
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         MainComponent(
@@ -84,7 +92,7 @@ class _HomePageState extends State<HomePage> {
         HourlyCard(hourlyListInfo: forecastDto.days[0].hours),
         DailyCard(daysInfo: forecastDto.days)
       ],
-    ));
+    );
   }
 }
 

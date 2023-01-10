@@ -18,12 +18,12 @@ class ForecastLocationLoadingState extends ForecastLocationState {
 }
 
 class ForecastLocationSuccessState extends ForecastLocationState {
-  final ForecastDto forecastDto;
+  final List<ForecastDto> forecastDtos;
 
-  const ForecastLocationSuccessState({required this.forecastDto});
+  const ForecastLocationSuccessState({required this.forecastDtos});
 
   @override
-  List<Object?> get props => [forecastDto];
+  List<Object?> get props => [forecastDtos];
 }
 
 class ForecastLocationErrorState extends ForecastLocationState {
