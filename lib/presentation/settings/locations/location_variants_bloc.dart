@@ -32,7 +32,7 @@ class LocationVariantsBloc
   _onSaveLocation(
       SaveLocationEvent event, Emitter<LocationVariantsState> emit) async {
     await local.insertLocation(
-        LocationEntity(id: 0, cityName: event.location, loc: event.location));
+        LocationEntity(loc: event.location));
     emit(const LocationSaveSuccessState());
   }
 }

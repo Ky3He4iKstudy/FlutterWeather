@@ -29,6 +29,6 @@ class WeatherRepositoryImpl extends WeatherRepository {
   Future<ForecastDto> getForecast(String location) async {
     ForecastContainerModel? model =
         (await _weatherService.getForecast(location));
-    return ForecastContainerToForecastDtoMapper.mapToDto(model);
+    return ForecastContainerToForecastDtoMapper.mapToDto(model, location);
   }
 }

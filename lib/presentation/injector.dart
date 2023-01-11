@@ -2,6 +2,7 @@ import 'package:flutter_weather/data/local/repository/local_repository.dart';
 import 'package:flutter_weather/data/local/repository/local_repository_impl.dart';
 import 'package:flutter_weather/domain/usecase/get_forecast_by_location.dart';
 import 'package:flutter_weather/domain/usecase/get_varians_of_location.dart';
+import 'package:flutter_weather/domain/usecase/remove_location.dart';
 import 'package:flutter_weather/presentation/home/forecast/forecast_location_bloc.dart';
 import 'package:flutter_weather/presentation/settings/locations/location_variants_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -21,6 +22,8 @@ void initializeDependencies() {
     WeatherRepositoryImpl(injector()),
   );
 
+  injector.registerSingleton<LocalRepository>(LocalRepositoryImpl());
+
   injector.registerSingleton<GetWeatherByLocation>(
       GetWeatherByLocation(injector()));
 
@@ -30,12 +33,12 @@ void initializeDependencies() {
   injector.registerSingleton<GetVariantsOfLocation>(
       GetVariantsOfLocation(injector()));
 
-  injector.registerSingleton<LocalRepository>(LocalRepositoryImpl());
+  injector.registerSingleton<RemoveLocation>(RemoveLocation(injector()));
 
   injector.registerFactory<WeatherLocationBloc>(
-          () => WeatherLocationBloc(injector()));
+      () => WeatherLocationBloc(injector()));
   injector.registerFactory<ForecastLocationBloc>(
-          () => ForecastLocationBloc(injector()));
+      () => ForecastLocationBloc(injector(), injector()));
   injector.registerFactory<LocationVariantsBloc>(
-          () => LocationVariantsBloc(injector()));
+      () => LocationVariantsBloc(injector()));
 }

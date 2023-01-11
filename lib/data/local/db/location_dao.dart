@@ -16,5 +16,5 @@ class LocationDao extends DatabaseAccessor<LocationDB> with _$LocationDaoMixin {
 
   Future updateTodo(LocationEntity entry) => update(locationEntitys).replace(entry);
 
-  Future deleteTodo(int id) => (delete(locationEntitys)..where((t) => t.id.equals(id))).go();
+  Future deleteTodo(String loc) => (delete(locationEntitys)..where((t) => t.loc.equals(loc))).go();
 }

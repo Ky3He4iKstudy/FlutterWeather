@@ -84,6 +84,7 @@ class _HomePageState extends State<HomePage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
+        Text(forecastDto.location),
         MainComponent(
             temperature: forecastDto.days[0].day.avgtemp_c,
             minTemperature: forecastDto.days[0].day.mintemp_c,
@@ -93,6 +94,10 @@ class _HomePageState extends State<HomePage> {
         DailyCard(daysInfo: forecastDto.days)
       ],
     );
+  }
+
+  void Function() deleteWeather(String location) {
+    return () => bloc.add(RemoveLocationEvent(location: location));
   }
 }
 

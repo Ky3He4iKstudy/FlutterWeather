@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weather/data/local/db/location_db.dart';
 import 'package:flutter_weather/data/local/repository/local_repository.dart';
+import 'package:get_it/get_it.dart';
 
 // import '../../data/local/location_db.dart';
 import '../home/forecast/forecast_location_bloc.dart';
@@ -18,7 +19,6 @@ class _SettingsPageState extends State<SettingsPage> {
   var isChecked = false;
   var lat = "";
   var long = "";
-  var city = "";
   late ForecastLocationBloc bloc;
   late LocalRepository local;
 
@@ -28,7 +28,7 @@ class _SettingsPageState extends State<SettingsPage> {
   void initState() {
     super.initState();
     bloc = context.read<ForecastLocationBloc>();
-    local = context.read<LocalRepository>();
+    local = GetIt.instance.get<LocalRepository>();
   }
 
   @override
@@ -90,9 +90,7 @@ class _SettingsPageState extends State<SettingsPage> {
         const Text("City:"),
         Expanded(
             child: TextField(
-                onChanged: (String value) {
-                  city = value;
-                },
+                onSubmitted: (value) => onCitySubmit(value),
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(), hintText: "City name")))
       ],
@@ -110,16 +108,17 @@ class _SettingsPageState extends State<SettingsPage> {
       var longD = double.tryParse(long);
       if (latD != null && longD != null) {
         var result = '$latD,$longD';
+
         local.insertLocation(
-            LocationEntity(id: 0, cityName: result, loc: result));
+            LocationEntity(loc: result));
         Navigator.pop(context);
       }
     }
   }
 
-  void onCitySubmit(String lat, String long) {
+  void onCitySubmit(String city) {
     if (city.isNotEmpty) {
-      local.insertLocation(LocationEntity(id: 0, cityName: city, loc: city));
+      local.insertLocation(LocationEntity(loc: city));
       Navigator.pop(context);
     }
   }

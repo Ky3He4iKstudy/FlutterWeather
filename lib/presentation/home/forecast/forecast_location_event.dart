@@ -10,3 +10,12 @@ abstract class ForecastLocationEvent extends Equatable {
 class GetForecastLocationEvent extends ForecastLocationEvent {
   const GetForecastLocationEvent();
 }
+
+class RemoveLocationEvent extends ForecastLocationEvent {
+  final String location;
+
+  const RemoveLocationEvent({required this.location});
+
+  @override
+  List<Object?> get props => [location];
+}

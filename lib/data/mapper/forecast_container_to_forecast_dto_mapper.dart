@@ -13,10 +13,10 @@ import '../remote/model/day_model.dart';
 import '../remote/model/hour_model.dart';
 
 class ForecastContainerToForecastDtoMapper {
-  static ForecastDto mapToDto(ForecastContainerModel model) {
+  static ForecastDto mapToDto(ForecastContainerModel model, String location) {
     return ForecastDto(
-        days:
-            model.forecast!.forecastday!.map((e) => mapDaysToDto(e)).toList());
+        days: model.forecast!.forecastday!.map((e) => mapDaysToDto(e)).toList(),
+        location: location);
   }
 
   static DaysDto mapDaysToDto(DayModel model) {
