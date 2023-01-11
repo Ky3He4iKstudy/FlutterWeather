@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
     return BlocProvider<ForecastLocationBloc>(
       create: (_) => injector()..add(const GetForecastLocationEvent()),
       child: MaterialApp(
-        title: 'Startup Name Generator',
+        title: 'Weatherapp',
         // theme: theme.copyWith(textTheme: appTextTheme),
         theme: AppTheme.light,
         initialRoute: '/',

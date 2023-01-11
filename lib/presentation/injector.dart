@@ -18,6 +18,11 @@ import 'home/weather/weather_location_bloc.dart';
 final injector = GetIt.instance;
 
 void initializeDependencies() {
+  injector.registerSingleton<GetCurrentLocation>(GetCurrentLocation());
+
+  injector.registerFactory<CurrentLocationBloc>(
+      () => CurrentLocationBloc(injector()));
+
   injector.registerSingleton(WeatherService());
 
   injector.registerSingleton<WeatherRepository>(
@@ -35,8 +40,6 @@ void initializeDependencies() {
   injector.registerSingleton<GetVariantsOfLocation>(
       GetVariantsOfLocation(injector()));
 
-  injector.registerSingleton<GetCurrentLocation>(GetCurrentLocation());
-
   injector.registerSingleton<RemoveLocation>(RemoveLocation(injector()));
 
   injector.registerFactory<WeatherLocationBloc>(
@@ -45,6 +48,4 @@ void initializeDependencies() {
       () => ForecastLocationBloc(injector(), injector(), injector()));
   injector.registerFactory<LocationVariantsBloc>(
       () => LocationVariantsBloc(injector(), injector()));
-  injector.registerFactory<CurrentLocationBloc>(
-      () => CurrentLocationBloc(injector()));
 }
