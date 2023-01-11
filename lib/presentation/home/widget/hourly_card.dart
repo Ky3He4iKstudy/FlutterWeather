@@ -37,7 +37,27 @@ class HourlyCard extends StatelessWidget {
                       const Divider(
                         height: 6,
                       ),
-                      Text('${item.temp_c}°', style: appTextTheme.titleLarge)
+                      Text('${item.temp_c}°', style: appTextTheme.titleLarge),
+                      const Divider(
+                        height: 6,
+                      ),
+                      Text('${item.feelslike_c}°',
+                          style: appTextTheme.titleMedium),
+                      const Divider(
+                        height: 6,
+                      ),
+                      Text('${item.precip_mm} mm',
+                          style: appTextTheme.titleSmall),
+                      const Divider(
+                        height: 6,
+                      ),
+                      Text('${item.pressure_mb} mmHg',
+                          style: appTextTheme.titleSmall),
+                      const Divider(
+                        height: 6,
+                      ),
+                      Text('${item.wind_kph} km/h ${item.wind_dir}',
+                          style: appTextTheme.titleSmall),
                     ],
                   ));
             },

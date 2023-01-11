@@ -4,9 +4,9 @@ class AppTheme {
   static ThemeData get light {
     var appLightTheme = ThemeData(
         appBarTheme: const AppBarTheme(),
-        cardColor: Colors.deepPurple[200],
+        cardColor: Colors.deepOrange[200],
         colorScheme: ColorScheme.fromSwatch().copyWith(
-            primary: Colors.deepPurple,
+            primary: Colors.deepOrange,
             onPrimary: Colors.white,
             onSurface: Colors.white));
 

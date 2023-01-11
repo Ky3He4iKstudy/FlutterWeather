@@ -57,6 +57,11 @@ class DailyCard extends StatelessWidget {
                       'Min. ${item.day.mintemp_c}'
                       ' Max. ${item.day.maxtemp_c}',
                       style: appTextTheme.titleMedium,
+                    ),
+                    Text(
+                      '${item.day.totalprecip_mm} mm  '
+                      '${item.day.avghumidity}%',
+                      style: appTextTheme.titleSmall,
                     )
                   ],
                 ),
