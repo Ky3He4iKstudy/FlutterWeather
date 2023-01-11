@@ -11,3 +11,7 @@ abstract class CurrentLocationEvent extends Equatable {
 class GetCurrentLocationEvent extends CurrentLocationEvent {
   const GetCurrentLocationEvent();
 }
+
+class CurrentLocationResetEvent extends CurrentLocationEvent {
+  const CurrentLocationResetEvent();
+}

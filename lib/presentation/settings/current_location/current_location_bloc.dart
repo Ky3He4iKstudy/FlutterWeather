@@ -23,5 +23,9 @@ class CurrentLocationBloc
         emit(CurrentLocationGot(lat: loc.latitude, long: loc.longitude));
       }
     });
+
+    on<CurrentLocationResetEvent>((event, emit) {
+      emit(const CurrentLocationInitial());
+    });
   }
 }

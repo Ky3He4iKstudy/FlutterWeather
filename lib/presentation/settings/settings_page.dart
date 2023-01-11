@@ -38,14 +38,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return BlocProvider<CurrentLocationBloc>(
       create: (_) => injector()..add(const GetCurrentLocationEvent()),
-      child: Scaffold(
-          appBar: AppBar(
-            title: const Text("Settings"),
-            leading: IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () => Navigator.pop(context)),
-          ),
-          body: _buildBody()),
+      child: _buildBody(),
     );
   }
 
