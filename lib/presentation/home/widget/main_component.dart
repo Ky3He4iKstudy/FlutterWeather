@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'base_card.dart';
 
 class MainComponent extends StatelessWidget {
+  final String title;
   final double temperature;
   final double minTemperature;
   final double maxTemperature;
@@ -11,6 +12,7 @@ class MainComponent extends StatelessWidget {
   const MainComponent(
       {Key? key,
       required,
+      required this.title,
       required this.temperature,
       required this.minTemperature,
       required this.maxTemperature,
@@ -23,6 +25,7 @@ class MainComponent extends StatelessWidget {
     return BaseCard(
         child: Column(
       children: <Widget>[
+        Text(title, style: appTextTheme.titleLarge),
         Text(
           '$temperature°',
           style: appTextTheme.displayMedium,

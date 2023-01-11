@@ -13,13 +13,12 @@ class ForecastLocationBloc
     extends Bloc<ForecastLocationEvent, ForecastLocationState> {
   final GetForecastByLocation _getForecastByLocation;
   final RemoveLocation _removeLocation;
-  late LocalRepository local;
+  final LocalRepository local;
 
-  ForecastLocationBloc(this._getForecastByLocation, this._removeLocation)
+  ForecastLocationBloc(this._getForecastByLocation, this._removeLocation, this.local)
       : super(const ForecastLocationInitialState()) {
     on<GetForecastLocationEvent>(_onGetForecastLocation);
     on<RemoveLocationEvent>(_onRemoveLocation);
-    local = GetIt.instance.get<LocalRepository>();
   }
 
   Future<void> _onGetForecastLocation(

@@ -33,16 +33,11 @@ class HourlyCard extends StatelessWidget {
                       const Divider(
                         height: 6,
                       ),
-                      Icon(
-                        IconData(item.condition.code,
-                            fontFamily: 'MaterialIcons'),
-                        size: 30,
-                      ),
+                      Text(item.condition.text),
                       const Divider(
                         height: 6,
                       ),
-                      Text('${item.temp_c}°',
-                          style: appTextTheme.titleLarge)
+                      Text('${item.temp_c}°', style: appTextTheme.titleLarge)
                     ],
                   ));
             },

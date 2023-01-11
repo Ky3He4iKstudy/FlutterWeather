@@ -84,8 +84,8 @@ class _HomePageState extends State<HomePage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        Text(forecastDto.location),
         MainComponent(
+            title: forecastDto.location,
             temperature: forecastDto.days[0].day.avgtemp_c,
             minTemperature: forecastDto.days[0].day.mintemp_c,
             maxTemperature: forecastDto.days[0].day.maxtemp_c,

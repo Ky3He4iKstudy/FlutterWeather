@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weather/presentation/settings/locations/location_variants_event.dart';
 import 'package:flutter_weather/presentation/settings/locations/location_variants_state.dart';
-import 'package:get_it/get_it.dart';
 
 import '../../../data/local/db/location_db.dart';
 import '../../../data/local/repository/local_repository.dart';
@@ -11,13 +10,12 @@ import '../../../domain/usecase/usecase_params.dart';
 class LocationVariantsBloc
     extends Bloc<LocationVariantsEvent, LocationVariantsState> {
   final GetVariantsOfLocation _getVariantsOfLocation;
-  late LocalRepository local;
+  final LocalRepository local;
 
-  LocationVariantsBloc(this._getVariantsOfLocation)
+  LocationVariantsBloc(this._getVariantsOfLocation, this.local)
       : super(const LocationVariantsInitialState()) {
     on<GetLocationVariantsEvent>(_onGetLocationVariants);
     on<SaveLocationEvent>(_onSaveLocation);
-    local = GetIt.instance.get<LocalRepository>();
   }
 
   _onGetLocationVariants(
@@ -31,8 +29,7 @@ class LocationVariantsBloc
 
   _onSaveLocation(
       SaveLocationEvent event, Emitter<LocationVariantsState> emit) async {
-    await local.insertLocation(
-        LocationEntity(loc: event.location));
+    await local.insertLocation(LocationEntity(loc: event.location));
     emit(const LocationSaveSuccessState());
   }
 }

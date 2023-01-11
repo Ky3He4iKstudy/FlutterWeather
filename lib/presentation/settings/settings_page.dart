@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weather/data/local/db/location_db.dart';
 import 'package:flutter_weather/data/local/repository/local_repository.dart';
+import 'package:flutter_weather/presentation/settings/current_location/current_location_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 // import '../../data/local/location_db.dart';
@@ -19,6 +20,7 @@ class _SettingsPageState extends State<SettingsPage> {
   var isChecked = false;
   var lat = "";
   var long = "";
+  late CurrentLocationBloc locBloc;
   late ForecastLocationBloc bloc;
   late LocalRepository local;
 
@@ -27,23 +29,35 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   void initState() {
     super.initState();
+    locBloc = context.read<CurrentLocationBloc>();
     bloc = context.read<ForecastLocationBloc>();
     local = GetIt.instance.get<LocalRepository>();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text("Settings"),
-          leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () => Navigator.pop(context)),
-        ),
-        body: _buildBody());
+    return BlocBuilder<CurrentLocationBloc, CurrentLocationState>(
+        builder: (context, state) {
+      if (state is CurrentLocationGetting) {
+        return const Center(child: CircularProgressIndicator());
+      }
+      var error = state is CurrentLocationUnavailable;
+      if (state is CurrentLocationGot) {
+        lat = state.lat.toString();
+        long = state.long.toString();
+      }
+      return Scaffold(
+          appBar: AppBar(
+            title: const Text("Settings"),
+            leading: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () => Navigator.pop(context)),
+          ),
+          body: _buildBody(error));
+    });
   }
 
-  Widget _buildBody() {
+  Widget _buildBody(bool error) {
     var checkRow = Row(
       children: [
         Checkbox(
@@ -61,28 +75,31 @@ class _SettingsPageState extends State<SettingsPage> {
       children: [
         const Text("Coordinates:"),
         Expanded(
-          child: TextField(
+          child: TextFormField(
+              initialValue: lat,
               keyboardType: TextInputType.number,
               onChanged: (String value) {
                 lat = value;
               },
-              onSubmitted: (String lat) {
+              onFieldSubmitted: (String lat) {
                 onCoordSubmit(lat, long);
               },
               decoration: const InputDecoration(
                   border: OutlineInputBorder(), hintText: "Lat")),
         ),
         Expanded(
-            child: TextField(
+            child: TextFormField(
+                initialValue: long,
                 keyboardType: TextInputType.number,
                 onChanged: (String value) {
                   long = value;
                 },
-                onSubmitted: (String lat) {
+                onFieldSubmitted: (String long) {
                   onCoordSubmit(lat, long);
                 },
                 decoration: const InputDecoration(
-                    border: OutlineInputBorder(), hintText: "Long")))
+                    border: OutlineInputBorder(), hintText: "Long"))),
+        MaterialButton(onPressed: onGpsClick, child: const Text("GPS"))
       ],
     );
     var cityRow = Row(
@@ -96,9 +113,14 @@ class _SettingsPageState extends State<SettingsPage> {
       ],
     );
     var row = isChecked ? coordRow : cityRow;
+    var errorRow = Row(
+      children: [
+        error ? const Text("There are error getting location") : const Text("")
+      ],
+    );
     return BaseCard(
         child: Column(
-      children: [checkRow, row],
+      children: [checkRow, row, errorRow],
     ));
   }
 
@@ -109,8 +131,7 @@ class _SettingsPageState extends State<SettingsPage> {
       if (latD != null && longD != null) {
         var result = '$latD,$longD';
 
-        local.insertLocation(
-            LocationEntity(loc: result));
+        local.insertLocation(LocationEntity(loc: result));
         Navigator.pop(context);
       }
     }
@@ -121,5 +142,9 @@ class _SettingsPageState extends State<SettingsPage> {
       local.insertLocation(LocationEntity(loc: city));
       Navigator.pop(context);
     }
+  }
+
+  void onGpsClick() {
+    locBloc.add(const GetCurrentLocationEvent());
   }
 }

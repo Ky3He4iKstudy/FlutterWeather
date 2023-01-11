@@ -40,11 +40,7 @@ class DailyCard extends StatelessWidget {
                           style: appTextTheme.titleLarge,
                         ),
                         const VerticalDivider(width: 5),
-                        Icon(
-                          IconData(item.day.condition.code,
-                              fontFamily: "MaterialIcons"),
-                          size: 30,
-                        )
+                        Text(item.day.condition.text)
                       ],
                     ),
                   ],
